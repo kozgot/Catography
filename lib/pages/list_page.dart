@@ -19,7 +19,6 @@ class _ListPageState extends State<ListPage> {
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          mainAxisExtent: 125,
           crossAxisCount: 3,
           mainAxisSpacing: 3,
           crossAxisSpacing: 3,
