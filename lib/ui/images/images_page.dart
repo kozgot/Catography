@@ -1,5 +1,5 @@
 import 'package:catography/data/image_data_store.dart';
-import 'package:catography/widgets/grid_item_widget.dart';
+import 'package:catography/ui/images/image_item_widget.dart';
 import 'package:flutter/material.dart';
 
 class ListPage extends StatefulWidget {

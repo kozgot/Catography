@@ -2,7 +2,7 @@ import 'package:catography/data/image_data_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/detailed_page.dart';
+import '../details/detailed_page.dart';
 
 class GridItemWidget extends StatelessWidget {
   final StockPhoto item;
