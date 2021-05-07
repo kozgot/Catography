@@ -1,6 +1,6 @@
 import 'package:catography/data/image_data_store.dart';
+import 'package:catography/widgets/grid_item_widget.dart';
 import 'package:flutter/material.dart';
-import '../widgets/list_item_widget.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -17,23 +17,18 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(
         title: Text("Image List"),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              // ... is the spread operator
-              ...Iterable.generate(
-                10,
-                    (id) {
-                  var item = StockPhoto.fromId(id);
-                  return ListItemWidget(
-                    item: item,
-                  );
-                },
-              ),
-            ],
-          ),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisExtent: 125,
+          crossAxisCount: 3,
+          mainAxisSpacing: 3,
+          crossAxisSpacing: 3,
+          childAspectRatio: 1 / 1,
         ),
+        itemBuilder: (context, index) {
+          var item = StockPhoto.fromId(index);
+          return GridItemWidget(item: item);
+        },
       ),
     );
   }
