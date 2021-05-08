@@ -1,21 +1,51 @@
+import 'package:catography/ui/details/detailed_page.dart';
+import 'package:catography/ui/images/images_page.dart';
 import 'package:flutter/material.dart';
-import 'ui/images/images_page.dart';
+import 'di/di_utils.dart';
 
 void main() {
-  runApp(MyApp());
+  initDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(CatApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+const DETAIL_PAGE = "/details";
+
+class CatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: ListPage(),
+    return FutureBuilder(
+      future: injector.allReady(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return MaterialApp(
+            title: 'Cute cat images',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: ImageListPage(),
+            onGenerateRoute: (settings) {
+              final name = settings.name ?? "";
+              if (name.startsWith(DETAIL_PAGE)) {
+                return MaterialPageRoute(
+                  builder: (context) {
+                    return ImageDetails(settings.arguments as String);
+                  },
+                );
+              }
+              return null;
+            },
+          );
+        }
+
+        return Container(
+          color: Colors.white,
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }

@@ -67,7 +67,7 @@ class NetworkBreed {
   final int hypoallergenic;
 
   @JsonKey(name: "reference_image_id")
-  final int referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
+  final String referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
 
   NetworkBreed(
       this.name,

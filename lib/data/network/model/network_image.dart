@@ -7,7 +7,7 @@ part 'network_image.g.dart';
 
 @immutable
 @JsonSerializable()
-class NetworkImage {
+class NetworkCatImage {
   final String id;
   final String url;
 
@@ -28,7 +28,7 @@ class NetworkImage {
 
   final List<NetworkBreed> breeds;
 
-  NetworkImage(
+  NetworkCatImage(
       this.id,
       this.url,
       this.breeds,
@@ -40,9 +40,9 @@ class NetworkImage {
       this.subId
       );
 
-  static const fromJsonFactory = _$NetworkImageFromJson;
+  static const fromJsonFactory = _$NetworkCatImageFromJson;
 
-  factory NetworkImage.fromJson(Map<String, dynamic> json) => _$NetworkImageFromJson(json);
+  factory NetworkCatImage.fromJson(Map<String, dynamic> json) => _$NetworkCatImageFromJson(json);
 
-  Map<String, dynamic> toJson() => _$NetworkImageToJson(this);
+  Map<String, dynamic> toJson() => _$NetworkCatImageToJson(this);
 }
