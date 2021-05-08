@@ -12,3 +12,11 @@ class LoadImagesEvent extends ImageListEvent {
 
   LoadImagesEvent._();
 }
+
+class RefreshImagesEvent extends ImageListEvent {
+  static final RefreshImagesEvent _instance = RefreshImagesEvent._();
+
+  factory RefreshImagesEvent() => _instance;
+
+  RefreshImagesEvent._();
+}

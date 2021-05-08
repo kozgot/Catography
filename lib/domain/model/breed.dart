@@ -5,25 +5,25 @@ import 'package:flutter/foundation.dart';
 class Breed extends Equatable {
   final String name;
   final String id;
-  final String temperament;
+  final String? temperament;
   final String origin;
-  final String lifeSpan;
-  final String description;
+  final String? lifeSpan;
+  final String? description;
   final bool indoor;
   final bool lap;
-  final String altNames;
-  final int adaptability;
-  final int affectionLevel;
-  final int childFriendly;
-  final int dogFriendly;
-  final int energyLevel;
-  final int grooming;
-  final int healthIssues;
-  final int intelligence;
-  final int sheddingLevel;
-  final int socialNeeds;
-  final int strangerFriendly;
-  final int vocalisation;
+  final String? altNames;
+  final int? adaptability;
+  final int? affectionLevel;
+  final int? childFriendly;
+  final int? dogFriendly;
+  final int? energyLevel;
+  final int? grooming;
+  final int? healthIssues;
+  final int? intelligence;
+  final int? sheddingLevel;
+  final int? socialNeeds;
+  final int? strangerFriendly;
+  final int? vocalisation;
   final bool experimental;
   final bool hairless;
   final bool natural;
@@ -32,7 +32,7 @@ class Breed extends Equatable {
   final bool suppressedTail;
   final bool shortLegs;
   final bool hypoallergenic;
-  final String referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
+  final String? referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
 
   const Breed({
     required this.id,

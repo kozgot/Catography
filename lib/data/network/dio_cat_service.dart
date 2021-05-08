@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import 'cat_api.dart';
-import 'model/network_reply.dart';
 
 part 'dio_cat_service.g.dart';
 
@@ -17,6 +16,14 @@ abstract class CatService implements CatApi {
         InterceptorsWrapper(
             onRequest: (request, handler) {
               request.headers["x-api-key"] = "16d40230-356f-4ee1-83ab-b3b9189b52f4";
+              handler.next(request);
+            }
+        )
+    );
+    _dio.interceptors.add(
+        InterceptorsWrapper(
+            onRequest: (request, handler) {
+              request.queryParameters["limit"] = 100;
               handler.next(request);
             }
         )

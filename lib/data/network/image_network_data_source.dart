@@ -14,9 +14,7 @@ class ImageNetworkDataSource {
     final networkResponse = await _catApi.getImages();
     if (networkResponse.response.statusCode != 200) return null;
 
-    final networkImages = (networkResponse.data as List)
-        .map((x) => NetworkCatImage.fromJson(x))
-        .toList();
+    final networkImages = networkResponse.data.toList();
     return networkImages.map((catImage) => catImage.toDomainModel()).toList();
   }
 
@@ -32,7 +30,7 @@ class ImageNetworkDataSource {
 extension on NetworkCatImage {
   CatImage toDomainModel() {
     final breed = this.breeds.length > 0 ? breeds[0].toDomainModel() : null;
-    var parsedDate = DateTime.parse(this.createdAt);
+    var parsedDate = this.createdAt != null ? DateTime.parse(this.createdAt!) : new DateTime.now();
 
     return CatImage(
       id: this.id,

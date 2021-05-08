@@ -32,6 +32,10 @@ class _ImageListContentState extends State<ImageListContent> {
 
   @override
   Widget build(BuildContext context) {
+    final queryData = MediaQuery.of(context);
+    final imageCount = queryData.size.width < 900 ? 3 : queryData.size.width < 1300 ? 5 : 7;
+    final imageExtent = queryData.size.width < 900 ? 125.0 : queryData.size.width < 1300 ? 175.0 : 225.0;
+
     return BlocListener<ImageListBloc, ImageListState>(
       listener: (_, state) {
         if (!(state is Refreshing)) {
@@ -41,10 +45,17 @@ class _ImageListContentState extends State<ImageListContent> {
       },
       child: RefreshIndicator(
         onRefresh: () async {
-          BlocProvider.of<ImageListBloc>(context).add(LoadImagesEvent());
+          BlocProvider.of<ImageListBloc>(context).add(RefreshImagesEvent());
           return _refreshCompleter.future;
         },
-        child: ListView.builder(
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            mainAxisExtent: imageExtent,
+            crossAxisCount: imageCount,
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
+            childAspectRatio: 1 / 1,
+          ),
           itemCount: state.images.length,
           itemBuilder: (context, index) {
             final item = state.images[index];
@@ -56,55 +67,18 @@ class _ImageListContentState extends State<ImageListContent> {
                   arguments: item.id,
                 );
               },
-              child: ListTile(
-                leading: CachedNetworkImage(
-                  imageUrl: item.url,
-                  height: 40,
-                  width: 40,
-                ),
-                title: Text(
-                  item.id,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Column(
-                  mainAxisSize: MainAxisSize.min,
+              child: GridTile(
+                child: Stack(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            item.breed != null ? item.breed!.name : "No Breed",
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                    Positioned.fill(
+                      child: Hero(
+                        tag: item.id,
+                        child: CachedNetworkImage(
+                          imageUrl: item.url,
+                          fit: BoxFit.cover,
                         ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          Icons.calendar_today,
-                          size: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 4.0),
-                          child: Text(
-                            item.createdAt.toString(),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                trailing: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.chevron_right,
-                      size: 20,
-                    )
                   ],
                 ),
               ),

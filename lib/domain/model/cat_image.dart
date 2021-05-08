@@ -9,9 +9,9 @@ class CatImage extends Equatable {
   final String url;
   final int width;
   final int height;
-  final String subId;
-  final String originalFileName;
-  final String breedId;
+  final String? subId;
+  final String? originalFileName;
+  final String? breedId;
   final DateTime createdAt;
   final Breed? breed;
 

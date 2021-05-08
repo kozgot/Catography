@@ -15,16 +15,16 @@ class NetworkCatImage {
   final int height;
 
   @JsonKey(name: "sub_id")
-  final String subId;
+  final String? subId;
 
   @JsonKey(name: "original_filename")
-  final String originalFilename;
+  final String? originalFilename;
 
   @JsonKey(name: "breed_ids")
-  final String breedIds;
+  final String? breedIds;
 
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
 
   final List<NetworkBreed> breeds;
 

@@ -14,6 +14,7 @@ class ImageDetails extends StatelessWidget {
 
   ImageDetails(this.imageId);
 
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,18 +29,30 @@ class ImageDetails extends StatelessWidget {
 
           if (state is ContentReady) {
             final image = state.catImage;
+            final queryData = MediaQuery.of(context);
+            final imageWidth = queryData.size.width > queryData.size.height ? queryData.size.height * 0.8 * 1.5 :queryData.size.width;
+            final imageHeight = queryData.size.width > queryData.size.height ? queryData.size.height * 0.8 : imageWidth*0.75;
+
             return Scaffold(
               appBar: AppBar(
                 title: Text("Image details"),
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+              body:SingleChildScrollView(
+                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [ CachedNetworkImage(
                       imageUrl: image.url,
-                      height: 200,
+                      width: imageWidth,
+                      height: imageHeight,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
+                  ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(image.id),
@@ -50,8 +63,8 @@ class ImageDetails extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.calendar_today,
@@ -70,16 +83,6 @@ class ImageDetails extends StatelessWidget {
                       onPressed: () async {
                         final url = image.url;
                         await launch(url, forceWebView: true);
-                        // This should be working, but it doesn't.
-                        // if (await canLaunch(url)) {
-                        //   await launch(url);
-                        // } else {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //       content: Text("Could not launch ${article.url}"),
-                        //     ),
-                        //   );
-                        // }
                       },
                       child: Text(
                         "OPEN IN BROWSER",

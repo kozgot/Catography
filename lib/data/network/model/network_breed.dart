@@ -8,66 +8,66 @@ part 'network_breed.g.dart';
 class NetworkBreed {
   final String name;
   final String id;
-  final String temperament;
+  final String? temperament;
   final String origin;
 
   @JsonKey(name: "life_span")
-  final String lifeSpan;
+  final String? lifeSpan;
 
-  final String description;
-  final int indoor;
-  final int lap;
+  final String? description;
+  final int? indoor;
+  final int? lap;
 
   @JsonKey(name: "alt_names")
-  final String altNames;
+  final String? altNames;
 
-  final int adaptability;
+  final int? adaptability;
 
   @JsonKey(name: "affection_level")
-  final int affectionLevel;
+  final int? affectionLevel;
 
   @JsonKey(name: "child_friendly")
-  final int childFriendly;
+  final int? childFriendly;
 
   @JsonKey(name: "dog_friendly")
-  final int dogFriendly;
+  final int? dogFriendly;
 
   @JsonKey(name: "energy_level")
-  final int energyLevel;
+  final int? energyLevel;
 
-  final int grooming;
+  final int? grooming;
 
   @JsonKey(name: "health_issues")
-  final int healthIssues;
+  final int? healthIssues;
 
-  final int intelligence;
+  final int? intelligence;
 
   @JsonKey(name: "shedding_level")
-  final int sheddingLevel;
+  final int? sheddingLevel;
 
   @JsonKey(name: "social_needs")
-  final int socialNeeds;
+  final int? socialNeeds;
 
   @JsonKey(name: "stranger_friendly")
-  final int strangerFriendly;
+  final int? strangerFriendly;
 
-  final int vocalisation;
-  final int experimental;
-  final int hairless;
-  final int natural;
-  final int rare;
-  final int rex;
+  final int? vocalisation;
+  final int? experimental;
+  final int? hairless;
+  final int? natural;
+  final int? rare;
+  final int? rex;
 
   @JsonKey(name: "suppressed_tail")
-  final int suppressedTail;
+  final int? suppressedTail;
 
   @JsonKey(name: "short_legs")
-  final int shortLegs;
+  final int? shortLegs;
 
-  final int hypoallergenic;
+  final int? hypoallergenic;
 
   @JsonKey(name: "reference_image_id")
-  final String referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
+  final String? referenceImageId;  // get the reference image like this: "https://cdn2.thecatapi.com/images/{referenceImageId}.jpg"
 
   NetworkBreed(
       this.name,
