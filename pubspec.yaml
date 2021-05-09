@@ -32,9 +32,7 @@ dependencies:
   cached_network_image: ^3.0.0
   dio: ^4.0.0
   retrofit: 2.0.0-beta1
-  floor: ^1.0.1
 
-  path_provider: ^2.0.1
   path:
   url_launcher: ^6.0.3
 
@@ -46,11 +44,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lorem: ^2.0.0
   animations: ^2.0.0
   build_runner:
   json_serializable: ^4.1.1
-  floor_generator: ^1.0.0
   retrofit_generator: 2.0.0-beta3
 
 # For information on the generic Dart part of this file, see the
