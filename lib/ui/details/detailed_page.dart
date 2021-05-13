@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:catography/di/di_utils.dart';
+import 'package:catography/domain/model/cat_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,12 +9,10 @@ import 'image_details_bloc.dart';
 import 'image_details_event.dart';
 import 'image_details_state.dart';
 
-
 class ImageDetails extends StatelessWidget {
-  final String imageId;
+  final CatImage catImage;
 
-  ImageDetails(this.imageId);
-
+  ImageDetails(this.catImage);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class ImageDetails extends StatelessWidget {
         builder: (context, state) {
           if (state is Loading) {
             BlocProvider.of<ImageDetailsBloc>(context)
-                .add(LoadImageEvent(imageId));
+                .add(LoadImageEvent(catImage.id));
             return ImageDetailsLoading();
           }
 
@@ -41,7 +40,7 @@ class ImageDetails extends StatelessWidget {
                   child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [ CachedNetworkImage(
-                      imageUrl: image.url,
+                      imageUrl: catImage.url,
                       width: imageWidth,
                       height: imageHeight,
                     imageBuilder: (context, imageProvider) => Container(
@@ -55,11 +54,11 @@ class ImageDetails extends StatelessWidget {
                   ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(image.id),
+                      child: Text(catImage.id),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(image.breed != null ? image.breed!.name : "No breed"),
+                      child: Text(catImage.breed != null ? catImage.breed!.name : "No breed"),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
@@ -73,7 +72,7 @@ class ImageDetails extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              image.createdAt.toString(),
+                              catImage.createdAt.toString(),
                             ),
                           ),
                         ],
@@ -81,7 +80,7 @@ class ImageDetails extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        final url = image.url;
+                        final url = catImage.url;
                         await launch(url, forceWebView: true);
                       },
                       child: Text(
@@ -96,7 +95,7 @@ class ImageDetails extends StatelessWidget {
 
           return Center(
             child: Text(
-              "Something went wrong while retrieving Article with id $imageId",
+              "Something went wrong while retrieving Article with id $catImage.id",
             ),
           );
         },

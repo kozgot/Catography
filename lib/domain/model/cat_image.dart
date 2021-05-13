@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'breed.dart';
 
 @immutable
-class CatImage extends Equatable {
+class CatImage extends Equatable implements Comparable {
   final String id;
   final String url;
   final int width;
@@ -63,4 +63,17 @@ class CatImage extends Equatable {
     createdAt,
     breed,
   ];
+
+  @override
+  int compareTo(other) {
+    if (this.createdAt.isBefore(other.createdAt)) {
+      return 1;
+    }
+
+    if (this.createdAt.isAfter(other.createdAt)) {
+      return -1;
+    }
+
+    return 0;
+  }
 }

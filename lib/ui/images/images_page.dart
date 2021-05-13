@@ -9,34 +9,50 @@ import 'image_list_event.dart';
 import 'package:catography/utils.dart';
 
 
-class ImageListPage extends StatelessWidget {
+class ImageListPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ImageListPageState();
+}
+
+class ImageListLoading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class _ImageListPageState extends State<ImageListPage> {
+  bool descendingOrder = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Image List"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  descendingOrder = !descendingOrder;
+                });
+              },
+              child: descendingOrder? Text('Order by dates descending'):Text('Order by dates ascending'),
+            style: TextButton.styleFrom(
+              primary: Colors.white,
+              textStyle: TextStyle(fontSize: 18),
+            ),
+          ),
+        ],
       ),
-      /*
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 3,
-          crossAxisSpacing: 3,
-          childAspectRatio: 1 / 1,
-        ),
-        itemBuilder: (context, index) {
-          var item = StockPhoto.fromId(index);
-          return GridItemWidget(item: item);
-        },
-      ),
-       */
       body: BlocProvider(
         create: (context) => injector<ImageListBloc>(),
         child: BlocListener<ImageListBloc, ImageListState>(
           listener: (context, state) {
             if (state is Error) {
               context.showSnackBar(
-                content: Text("Failed to refresh articles!"),
+                content: Text("Failed to refresh images!"),
               );
             }
           },
@@ -49,6 +65,12 @@ class ImageListPage extends StatelessWidget {
               }
 
               if (state is Content) {
+                if (descendingOrder) {
+                  state.images.sort((a, b) { return a.compareTo(b); });
+                } else {
+                  state.images.sort((a, b) { return b.compareTo(a); });
+                }
+
                 return ImageListContent(state);
               }
 
@@ -59,15 +81,6 @@ class ImageListPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ImageListLoading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
     );
   }
 }

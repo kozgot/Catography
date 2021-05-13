@@ -64,7 +64,7 @@ class _ImageListContentState extends State<ImageListContent> {
                 Navigator.pushNamed(
                   context,
                   DETAIL_PAGE,
-                  arguments: item.id,
+                  arguments: item,
                 );
               },
               child: GridTile(

@@ -1,3 +1,4 @@
+import 'package:catography/domain/model/cat_image.dart';
 import 'package:catography/ui/details/detailed_page.dart';
 import 'package:catography/ui/images/images_page.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class CatApp extends StatelessWidget {
               if (name.startsWith(DETAIL_PAGE)) {
                 return MaterialPageRoute(
                   builder: (context) {
-                    return ImageDetails(settings.arguments as String);
+                    return ImageDetails(settings.arguments as CatImage);
                   },
                 );
               }
