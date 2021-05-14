@@ -32,7 +32,6 @@ class _ImageListContentState extends State<ImageListContent> {
 
     return BlocListener<ImageListBloc, ImageListState>(
       listener: (_, state) {
-        // todo ?
       },
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

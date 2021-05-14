@@ -30,42 +30,38 @@ class ImageListPage extends StatelessWidget {
                 return Scaffold(
                     appBar: AppBar(
                       title: Text("Image List"),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            BlocProvider.of<ImageListBloc>(context)
-                                .add(LoadImagesEvent());
-                          },
-                          child: Text('Order by dates descending'),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            textStyle: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ],
                     ),
                     body: ImageListLoading()
+                );
+              }
+
+              if (state is Content) {
+                return  Scaffold(
+                  appBar: AppBar(
+                    title: Text("Image List"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          BlocProvider.of<ImageListBloc>(context)
+                              .add(ToggleImageOrderEvent());
+                        },
+                        child: state.descendingOrder ? Text('Order by dates descending') : Text('Order by dates ascending'),
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          textStyle: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ],
+                  ),
+                  body: ImageListContent(state),
                 );
               }
 
                 return Scaffold(
                     appBar: AppBar(
                       title: Text("Image List"),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            BlocProvider.of<ImageListBloc>(context)
-                                .add(ToggleImageOrderEvent());
-                          },
-                          child: state is Content && state.descendingOrder ? Text('Order by dates descending') : Text('Order by dates ascending'),
-                          style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            textStyle: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ],
                     ),
-                    body: state is Content ? ImageListContent(state) : Center(child: Text("Something went wrong :(")),
+                    body: Center(child: Text("Something went wrong :(")),
                 );
             },
           ),

@@ -35,8 +35,4 @@ abstract class CatService implements CatApi {
   @override
   @GET("/images")
   Future<HttpResponse<List<NetworkCatImage>>> getImages();
-
-  @override
-  @GET("/images/{id}")
-  Future<HttpResponse<NetworkCatImage>> getImageById(@Path("id") String id);
 }
