@@ -17,27 +17,28 @@ class Loading extends ImageListState {
 
 abstract class Content extends ImageListState {
   final List<CatImage> images;
+  final bool descendingOrder;
 
-  Content({required this.images});
+  Content({required this.images, required this.descendingOrder});
 }
 
 class ContentReady extends Content with EquatableMixin {
-  ContentReady({required List<CatImage> images}): super(images: images);
+  ContentReady({required List<CatImage> images, required bool descendingOrder}): super(images: images, descendingOrder: descendingOrder);
 
   @override
-  List<Object> get props => [images];
+  List<Object> get props => [images, descendingOrder];
 }
 
-class Refreshing extends Content with EquatableMixin {
-  Refreshing({required List<CatImage> images}): super(images: images);
+class OrderChanged extends Content with EquatableMixin {
+  OrderChanged({required List<CatImage> images, required bool descendingOrder}): super(images: images, descendingOrder: descendingOrder);
 
   @override
-  List<Object> get props => [images];
+  List<Object> get props => [images, descendingOrder];
 }
 
 class Error extends Content with EquatableMixin {
-  Error({required List<CatImage> images}): super(images: images);
+  Error({required List<CatImage> images, required bool descendingOrder}): super(images: images, descendingOrder: descendingOrder);
 
   @override
-  List<Object> get props => [images];
+  List<Object> get props => [images, descendingOrder];
 }

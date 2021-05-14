@@ -9,44 +9,10 @@ import 'image_list_event.dart';
 import 'package:catography/utils.dart';
 
 
-class ImageListPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _ImageListPageState();
-}
-
-class ImageListLoading extends StatelessWidget {
+class ImageListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-}
-
-class _ImageListPageState extends State<ImageListPage> {
-  bool descendingOrder = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Image List"),
-        actions: [
-          TextButton(
-              onPressed: () {
-                setState(() {
-                  descendingOrder = !descendingOrder;
-                });
-              },
-              child: descendingOrder? Text('Order by dates descending'):Text('Order by dates ascending'),
-            style: TextButton.styleFrom(
-              primary: Colors.white,
-              textStyle: TextStyle(fontSize: 18),
-            ),
-          ),
-        ],
-      ),
-      body: BlocProvider(
+    return  BlocProvider(
         create: (context) => injector<ImageListBloc>(),
         child: BlocListener<ImageListBloc, ImageListState>(
           listener: (context, state) {
@@ -61,26 +27,58 @@ class _ImageListPageState extends State<ImageListPage> {
               if (state is Loading) {
                 BlocProvider.of<ImageListBloc>(context)
                     .add(LoadImagesEvent());
-                return ImageListLoading();
+                return Scaffold(
+                    appBar: AppBar(
+                      title: Text("Image List"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            BlocProvider.of<ImageListBloc>(context)
+                                .add(LoadImagesEvent());
+                          },
+                          child: Text('Order by dates descending'),
+                          style: TextButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                    body: ImageListLoading()
+                );
               }
 
-              if (state is Content) {
-                if (descendingOrder) {
-                  state.images.sort((a, b) { return a.compareTo(b); });
-                } else {
-                  state.images.sort((a, b) { return b.compareTo(a); });
-                }
-
-                return ImageListContent(state);
-              }
-
-              return Center(
-                child: Text("Something went wrong :("),
-              );
+                return Scaffold(
+                    appBar: AppBar(
+                      title: Text("Image List"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            BlocProvider.of<ImageListBloc>(context)
+                                .add(ToggleImageOrderEvent());
+                          },
+                          child: state is Content && state.descendingOrder ? Text('Order by dates descending') : Text('Order by dates ascending'),
+                          style: TextButton.styleFrom(
+                            primary: Colors.white,
+                            textStyle: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    ),
+                    body: state is Content ? ImageListContent(state) : Center(child: Text("Something went wrong :(")),
+                );
             },
           ),
         ),
-      ),
+    );
+  }
+}
+
+class ImageListLoading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

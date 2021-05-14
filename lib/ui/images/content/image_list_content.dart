@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:catography/ui/images/image_list_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,14 +17,11 @@ class ImageListContent extends StatefulWidget {
 
 class _ImageListContentState extends State<ImageListContent> {
   Content state;
-  late Completer _refreshCompleter;
-
   _ImageListContentState(this.state);
 
   @override
   void initState() {
     super.initState();
-    _refreshCompleter = Completer();
   }
 
   @override
@@ -38,17 +32,9 @@ class _ImageListContentState extends State<ImageListContent> {
 
     return BlocListener<ImageListBloc, ImageListState>(
       listener: (_, state) {
-        if (!(state is Refreshing)) {
-          _refreshCompleter.complete();
-          _refreshCompleter = Completer();
-        }
+        // todo ?
       },
-      child: RefreshIndicator(
-        onRefresh: () async {
-          BlocProvider.of<ImageListBloc>(context).add(RefreshImagesEvent());
-          return _refreshCompleter.future;
-        },
-        child: GridView.builder(
+      child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             mainAxisExtent: imageExtent,
             crossAxisCount: imageCount,
@@ -85,7 +71,6 @@ class _ImageListContentState extends State<ImageListContent> {
             );
           },
         ),
-      ),
     );
   }
 }

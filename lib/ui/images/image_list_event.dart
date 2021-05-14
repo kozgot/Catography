@@ -20,3 +20,11 @@ class RefreshImagesEvent extends ImageListEvent {
 
   RefreshImagesEvent._();
 }
+
+class ToggleImageOrderEvent extends ImageListEvent {
+  static final ToggleImageOrderEvent _instance = ToggleImageOrderEvent._();
+
+  factory ToggleImageOrderEvent() => _instance;
+
+  ToggleImageOrderEvent._();
+}

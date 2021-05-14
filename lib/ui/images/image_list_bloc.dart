@@ -1,4 +1,5 @@
 import 'package:catography/domain/interactor/image_interactor.dart';
+import 'package:catography/domain/model/cat_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'image_list_event.dart';
@@ -15,8 +16,8 @@ class ImageListBloc extends Bloc<ImageListEvent, ImageListState> {
   Stream<ImageListState> mapEventToState(ImageListEvent event) async* {
     if (event is LoadImagesEvent) {
       yield* _mapLoadImagesToState();
-    } else if (event is RefreshImagesEvent) {
-      yield* _mapRefreshImagesEvent();
+    } else if (event is ToggleImageOrderEvent) {
+      yield* _mapToggleImageOrderEvent();
     }
   }
 
@@ -25,21 +26,23 @@ class ImageListBloc extends Bloc<ImageListEvent, ImageListState> {
     final images = await _imageInteractor.getCatImages();
 
     print("Images refreshed, sending Content state with Image list");
-    yield ContentReady(images: images);
+    yield ContentReady(images: images, descendingOrder: true);
   }
 
-  Stream<ImageListState> _mapRefreshImagesEvent() async* {
+  Stream<ImageListState> _mapToggleImageOrderEvent() async* {
     final currentState = state;
-    if (!(currentState is Refreshing)) {
-      if (currentState is Content) {
-        print("Image refreshing requested");
-        yield Refreshing(images: currentState.images);
-      }
+    bool cucc = false;
+    List<CatImage> cats = [];
+    if (currentState is Content) {
+      print("Toggle image order requested");
+      final newDescending = !currentState.descendingOrder;
+      final newImages = currentState.images;
+      newImages.sort((a,b) { return newDescending ? a.compareTo(b) : b.compareTo(a); });
+      cucc = !currentState.descendingOrder;
+      cats = newImages;
+      yield OrderChanged(images: cats, descendingOrder: !currentState.descendingOrder);
     }
 
-    print("Getting Images from API");
-    final images = await _imageInteractor.getCatImages();
-
-    yield ContentReady(images: images);
+    yield ContentReady(images: cats, descendingOrder: cucc);
   }
 }
