@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'image_details_bloc.dart';
-import 'image_details_event.dart';
 import 'image_details_state.dart';
 
 class ImageDetails extends StatelessWidget {
@@ -20,14 +19,6 @@ class ImageDetails extends StatelessWidget {
       create: (context) => injector<ImageDetailsBloc>(),
       child: BlocBuilder<ImageDetailsBloc, ImageDetailsState>(
         builder: (context, state) {
-          if (state is Loading) {
-            BlocProvider.of<ImageDetailsBloc>(context)
-                .add(LoadImageEvent(catImage.id));
-            return ImageDetailsLoading();
-          }
-
-          if (state is ContentReady) {
-            final image = state.catImage;
             final queryData = MediaQuery.of(context);
             final imageWidth = queryData.size.width > queryData.size.height ? queryData.size.height * 0.8 * 1.5 :queryData.size.width;
             final imageHeight = queryData.size.width > queryData.size.height ? queryData.size.height * 0.8 : imageWidth*0.75;
@@ -91,28 +82,7 @@ class ImageDetails extends StatelessWidget {
                 ),
               ),
             );
-          }
-
-          return Center(
-            child: Text(
-              "Something went wrong while retrieving Article with id $catImage.id",
-            ),
-          );
         },
-      ),
-    );
-  }
-}
-
-class ImageDetailsLoading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Image details"),
-      ),
-      body: Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }
