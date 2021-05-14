@@ -17,14 +17,6 @@ class ImageNetworkDataSource {
     final networkImages = networkResponse.data.toList();
     return networkImages.map((catImage) => catImage.toDomainModel()).toList();
   }
-
-  Future<CatImage?> getImageById(String id) async {
-    final networkResponse = await _catApi.getImageById(id);
-    if (networkResponse.response.statusCode != 200) return null;
-
-    final networkImage = networkResponse.data;
-    return networkImage.toDomainModel();
-  }
 }
 
 extension on NetworkCatImage {

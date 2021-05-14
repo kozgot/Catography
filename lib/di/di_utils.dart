@@ -2,7 +2,6 @@ import 'package:catography/data/network/cat_api.dart';
 import 'package:catography/data/network/dio_cat_service.dart';
 import 'package:catography/data/network/image_network_data_source.dart';
 import 'package:catography/domain/interactor/image_interactor.dart';
-import 'package:catography/ui/details/image_details_bloc.dart';
 import 'package:catography/ui/images/image_list_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -25,12 +24,6 @@ void initDependencies() {
 
   injector.registerFactory(
         () => ImageListBloc(
-      injector<ImageInteractor>(),
-    ),
-  );
-
-  injector.registerFactory(
-        () => ImageDetailsBloc(
       injector<ImageInteractor>(),
     ),
   );

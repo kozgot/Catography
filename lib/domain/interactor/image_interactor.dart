@@ -13,9 +13,4 @@ class ImageInteractor {
     debugPrint("Downloading images from the network");
     return await _imageNetworkDataSource.getImages() ?? [];
   }
-
-  Future<CatImage?> getImageById(String id) async{
-    print("Getting image $id from API");
-    return await _imageNetworkDataSource.getImageById(id);
-  }
 }

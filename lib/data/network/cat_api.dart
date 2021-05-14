@@ -6,5 +6,4 @@ import 'package:retrofit/retrofit.dart';
 
 abstract class CatApi {
   Future<HttpResponse<List<NetworkCatImage>>> getImages();
-  Future<HttpResponse<NetworkCatImage>> getImageById(String id);
 }
